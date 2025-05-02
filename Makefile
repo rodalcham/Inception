@@ -6,21 +6,23 @@
 #    By: rchavez <rchavez@student.42heilbronn.de    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/04/28 17:01:32 by rchavez@stu       #+#    #+#              #
-#    Updated: 2025/05/02 15:39:44 by rchavez          ###   ########.fr        #
+#    Updated: 2025/05/02 18:01:50 by rchavez          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 SRC = ./srcs/docker-compose.yml
 
 up:
-	docker-compose -f ${SRC} up -d
+	mkdir -p ./srcs/Data/mysql
+	docker-compose -f $(SRC) build --no-cache
+	docker-compose -f $(SRC) up -d
 
-re:
-	docker-compose -f ./srcs/docker-compose.yml down --volumes --remove-orphans
+
+clean:
+	docker-compose -f $(SRC) down --volumes --remove-orphans
+	docker volume rm srcs_mdb || true
+	docker network rm inception || true
 	rm -rf ./srcs/Data
-	# mkdir -p ./Data/mysql
-	docker-compose -f ./srcs/docker-compose.yml build --no-cache
-	docker-compose -f ./srcs/docker-compose.yml up -d
 
 down:
 	docker-compose -f $(SRC) down

@@ -2,11 +2,11 @@ version: "3.7"
 
 services:
   mariadb:
-    build: ./mariadb
+    build: ./requirements/mariadb
     image: mariadb
     container_name: mariadb
     volumes:
-      - ./Data/mysql:/var/lib/mysql
+      - mdb:/var/lib/mysql
     expose:
       - "3306"
     env_file:
@@ -15,14 +15,14 @@ services:
       - inception
     restart: on-failure
 
-# volumes:
-#   mdb:
-#     name: mdb
-#     driver: local
-#     driver_opts:
-#       type: 'none'
-#       o: bind
-#       device: ./Data/mysql
+volumes:
+  mdb:
+    name: mdb
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /Users/rchavez/Desktop/Inception/srcs/Data/mysql
 
 networks:
   inception:
