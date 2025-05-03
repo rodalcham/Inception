@@ -6,7 +6,7 @@
 #    By: rchavez <rchavez@student.42heilbronn.de    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/04/28 17:01:32 by rchavez@stu       #+#    #+#              #
-#    Updated: 2025/05/03 12:57:25 by rchavez          ###   ########.fr        #
+#    Updated: 2025/05/03 16:06:07 by rchavez          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -66,3 +66,5 @@ wait:
 	@echo "Waiting for MySQL to be ready..."
 	@docker exec -it mariadb bash -c 'until mysqladmin ping --silent; do echo "Waiting for MySQL..."; sleep 1; done'
 	@echo "MySQL is ready!"
+
+re: clean prune purge restart-docker
