@@ -3,8 +3,8 @@
 
 
 # create directory to use in nginx container later and also to setup the wordpress conf
-mkdir /var/www/
-mkdir /var/www/html
+mkdir -p /var/www/
+mkdir -p /var/www/html
 
 cd /var/www/html
 
@@ -33,19 +33,10 @@ wp user create $WP_USR $WP_EMAIL --role=author --user_pass=$WP_PWD --allow-root
 
 wp theme install astra --activate --allow-root
 
-
-wp plugin install redis-cache --activate --allow-root
-
 wp plugin update --all --allow-root
-
-
 
 sed -i 's/listen = \/run\/php\/php7.3-fpm.sock/listen = 9000/g' /etc/php/7.3/fpm/pool.d/www.conf
 
 mkdir /run/php
-
-
-
-wp redis enable --allow-root
 
 /usr/sbin/php-fpm7.3 -F

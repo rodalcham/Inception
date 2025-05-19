@@ -1,6 +1,6 @@
-#!/bin/bash
+# !/bin/bash
 
-openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /etc/ssl/private/nginx-selfsigned.key -out $CERTS -subj "/C=DE/L=Heilbronn/O=42/OU=student/CN=$DOMAIN_NAME"
+openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /etc/ssl/private/nginx-selfsigned.key -out /etc/ssl/certs/nginx-selfsigned.crt -subj "/C=DE/L=Heilbronn/O=42/OU=student/CN=rchavez.42.fr"
 
 
 cat << EOF > /etc/nginx/sites-available/default
@@ -10,7 +10,7 @@ server {
 
 	server_name www.$DOMAIN_NAME $DOMAIN_NAME;
 
-	ssl_certificate $CERTS;
+	ssl_certificate /etc/ssl/certs/nginx-selfsigned.crt;
 	ssl_certificate_key /etc/ssl/private/nginx-selfsigned.key;
 
 	ssl_protocols TLSv1.3;
@@ -27,3 +27,4 @@ server {
 }
 EOF
 
+ln -sf /etc/nginx/sites-available/default /etc/nginx/sites-enabled/default
