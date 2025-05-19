@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: rchavez <rchavez@student.42heilbronn.de    +#+  +:+       +#+         #
+#    By: rchavez@student.42heilbronn.de <rchavez    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/04/28 17:01:32 by rchavez@stu       #+#    #+#              #
-#    Updated: 2025/05/03 16:06:07 by rchavez          ###   ########.fr        #
+#    Updated: 2025/05/17 17:54:24 by rchavez@stu      ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,6 +15,8 @@ SRC = ./srcs/docker-compose.yml
 up:
 	mkdir -p ./srcs/Data/mysql
 	chmod 755 ./srcs/Data/mysql
+	mkdir -p ./srcs/Data/wordpress
+	chmod 755 ./srcs/Data/wordpress
 	sleep 1
 	docker-compose -f $(SRC) build --no-cache
 	docker-compose -f $(SRC) up -d
@@ -50,6 +52,7 @@ purge:
 		docker network rm $$net; \
 	done
 	@rm -rf ./srcs/data/mysql
+	@rm -rf ./srcs/data/wordpress
 
 prune:
 	docker network prune -f
