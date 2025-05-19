@@ -65,3 +65,6 @@ networks:
   inception:
     driver: bridge
 
+secrets:
+  db_info:
+    file: srcs/.env
