@@ -1,42 +1,63 @@
-#!/bin/bash
+#!/bin/sh
+set -e
+
+MYSQL_USER=$(cat "$MYSQL_USER_FILE")
+MYSQL_PASSWORD=$(cat "$MYSQL_PASSWORD_FILE")
+
+if [ -f wp-config.php ]
+then
+	echo "wordpress already downloaded"
+else
+	#Download wordpress config
+	wget https://wordpress.org/latest.tar.gz
+	tar -xzvf latest.tar.gz
+	rm -rf latest.tar.gz
 
 
+	#Inport env variables in the config file. This creates the wp-config.php file
+	cd /var/www/html/wordpress
+	sed -i "s/username_here/$MYSQL_USER/g" wp-config-sample.php
+	sed -i "s/password_here/$MYSQL_PASSWORD/g" wp-config-sample.php
+	sed -i "s/localhost/$MYSQL_HOSTNAME/g" wp-config-sample.php
+	sed -i "s/database_name_here/$MYSQL_DATABASE/g" wp-config-sample.php
+	mv wp-config-sample.php wp-config.php
 
-# create directory to use in nginx container later and also to setup the wordpress conf
-mkdir -p /var/www/
-mkdir -p /var/www/html
+	#Update configuration file. This updates the www.conf file
+	sed -i 's|listen = /run/php/php7.3-fpm.sock|listen = 9000|' /etc/php/7.3/fpm/pool.d/www.conf
+fi
 
-cd /var/www/html
+# Wait for MariaDB
+# echo "Waiting for MariaDB..."
+# until mysql -h"$MYSQL_HOSTNAME" -u"$MYSQL_USER" -p"$MYSQL_PASSWORD" -e "SHOW DATABASES;" > /dev/null 2>&# 1; do
+# 	echo "Trying to connect"
+# 	echo mysql -h"$MYSQL_HOSTNAME" -u"$MYSQL_USER" -p"$MYSQL_PASSWORD" -e "SHOW DATABASES;" > /dev/null
+# 	mysql -h"$MYSQL_HOSTNAME" -u"$MYSQL_USER" -p"$MYSQL_PASSWORD" -e "SHOW DATABASES;" > /dev/null
+# 	echo .
+# 	sleep 1
+# done
 
-rm -rf *
+# Install WordPress core if not already installed
+if ! wp core is-installed --allow-root; then
+	echo "Installing WordPress core..."
+	wp core install \
+		--url="$WP_URL" \
+		--title="$WP_TITLE" \
+		--admin_user="$WP_ADMIN_USER" \
+		--admin_password="$WP_ADMIN_PWD" \
+		--admin_email="$WP_ADMIN_EMAIL" \
+		--allow-root
 
-curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar 
+	# Add second user
+	wp user create "$WP_USR" "$WP_EMAIL" \
+		--user_pass="$WP_PWD" \
+		--role=author \
+		--allow-root
+fi
+# USERS SHOULD BE SECRET????
 
-chmod +x wp-cli.phar 
+sed -i 's|listen = /run/php/php7.3-fpm.sock|listen = 9000|' /etc/php/7.3/fpm/pool.d/www.conf
 
-mv wp-cli.phar /usr/local/bin/wp
+echo "Wordpress is up and running"
 
-wp core download --allow-root
-
-mv /var/www/html/wp-config-sample.php /var/www/html/wp-config.php
-
-mv /wp-config.php /var/www/html/wp-config.php
-
-
-sed -i -r "s/db1/$db_name/1"   wp-config.php
-sed -i -r "s/user/$db_user/1"  wp-config.php
-sed -i -r "s/pwd/$db_pwd/1"    wp-config.php
-
-wp core install --url=$DOMAIN_NAME/ --title=$WP_TITLE --admin_user=$WP_ADMIN_USR --admin_password=$WP_ADMIN_PWD --admin_email=$WP_ADMIN_EMAIL --skip-email --allow-root
-
-wp user create $WP_USR $WP_EMAIL --role=author --user_pass=$WP_PWD --allow-root
-
-wp theme install astra --activate --allow-root
-
-wp plugin update --all --allow-root
-
-sed -i 's/listen = \/run\/php\/php7.3-fpm.sock/listen = 9000/g' /etc/php/7.3/fpm/pool.d/www.conf
-
-mkdir /run/php
-
-/usr/sbin/php-fpm7.3 -F
+mkdir -p /run/php
+exec /usr/sbin/php-fpm7.3 -F

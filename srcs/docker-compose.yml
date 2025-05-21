@@ -14,6 +14,14 @@ services:
     networks:
       - inception
     restart: on-failure
+    secrets:
+      - root_pass
+      - sql_usr
+      - sql_pass
+    environment:
+      - MYSQL_ROOT_PASSWORD_FILE=/run/secrets/root_pass
+      - MYSQL_USER_FILE=/run/secrets/sql_usr
+      - MYSQL_PASSWORD_FILE=/run/secrets/sql_pass
   wordpress:
     container_name: wordpress
     build: ./requirements/wordpress
@@ -27,6 +35,12 @@ services:
     networks:
       - inception
     restart: on-failure
+    secrets:
+      - sql_usr
+      - sql_pass
+    environment:
+      - MYSQL_USER_FILE=/run/secrets/sql_usr
+      - MYSQL_PASSWORD_FILE=/run/secrets/sql_pass
   nginx:
     container_name: nginx
     build: ./requirements/nginx
@@ -66,5 +80,9 @@ networks:
     driver: bridge
 
 secrets:
-  db_info:
-    file: srcs/.env
+  root_pass:
+    file: ./secrets/root_pass
+  sql_usr:
+    file: ./secrets/sql_usr
+  sql_pass:
+    file: ./secrets/sql_pass
