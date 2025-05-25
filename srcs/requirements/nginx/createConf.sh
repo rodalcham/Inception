@@ -27,7 +27,6 @@ server {
 		text/plain
 		text/css
 		text/javascript
-		text/html
 		application/javascript
 		application/json
 		application/xml
