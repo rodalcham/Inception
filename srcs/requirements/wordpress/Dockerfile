@@ -1,4 +1,4 @@
-FROM debian:bullseye
+FROM debian:10
 
 
 RUN apt-get update && \

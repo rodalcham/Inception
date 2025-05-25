@@ -26,7 +26,7 @@ else
 	mv wp-config-sample.php wp-config.php
 
 	#Update configuration file. This updates the www.conf file
-	sed -i 's|listen = /run/php/php7.4-fpm.sock|listen = 9000|' /etc/php/7.4/fpm/pool.d/www.conf
+	sed -i 's|listen = /run/php/php7.3-fpm.sock|listen = 9000|' /etc/php/7.3/fpm/pool.d/www.conf
 fi
 
 # Wait for MariaDB
@@ -58,9 +58,9 @@ if ! wp core is-installed --allow-root; then
 fi
 # USERS SHOULD BE SECRET????
 
-cat << EOF > /etc/php/7.4/fpm/pool.d/www.conf
+cat << EOF > /etc/php/gt/fpm/pool.d/www.conf
 	[global]
-	pid = /run/php/php7.4-fpm.pid
+	pid = /run/php/php7.3-fpm.pid
 	error_log = /dev/stdout
 	log_level = notice
 	[www]
@@ -78,9 +78,9 @@ cat << EOF > /etc/php/7.4/fpm/pool.d/www.conf
 EOF
 
 
-# sed -i 's|listen = /run/php/php7.4-fpm.sock|listen = 9000|' /etc/php/7.4/fpm/pool.d/www.conf
+# sed -i 's|listen = /run/php/php7.3-fpm.sock|listen = 9000|' /etc/php/7.3/fpm/pool.d/www.conf
 
 echo "Wordpress is up and running"
 
 mkdir -p /run/php
-exec /usr/sbin/php-fpm7.4 -F
+exec /usr/sbin/php-fpm7.3 -F
