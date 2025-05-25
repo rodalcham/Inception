@@ -19,7 +19,7 @@ server {
 	root /var/www/html;
 
 	location / {
-		autoindex on;
+		# autoindex on;
 		autoindex_format html;
 		try_files \$uri \$uri/ /index.php?\$args;
 	}
