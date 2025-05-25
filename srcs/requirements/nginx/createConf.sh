@@ -15,12 +15,12 @@ server {
 
 	ssl_protocols TLSv1.2 TLSv1.3;
 
-	index wp-login.php;
+	index index.php;
 	root /var/www/html;
 
 	location / {
-		# autoindex on;
-		# autoindex_format html;
+		autoindex on;
+		autoindex_format html;
 		try_files \$uri \$uri/ /index.php?\$args;
 	}
 

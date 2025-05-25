@@ -14,8 +14,8 @@ WP_ADMIN_EMAIL=$(cat $WP_ADMIN_EMAIL_FILE)
 
 # Install Wordpress
 if [ ! -f /var/www/html/wp-config.php ]; then
-    wp config create --dbname=$MYSQL_DATABASE --dbuser=$MYSQL_USER \
-        --dbpass=$MYSQL_PASSWORD --dbhost=$MYSQL_HOSTNAME --allow-root  --skip-check
+	wp config create --dbname=$MYSQL_DATABASE --dbuser=$MYSQL_USER \
+		--dbpass=$MYSQL_PASSWORD --dbhost=$MYSQL_HOSTNAME --allow-root  --skip-check
 
 	wp core install \
 		--url="$WP_URL" \
@@ -31,18 +31,32 @@ if [ ! -f /var/www/html/wp-config.php ]; then
 		--role=author \
 		--allow-root
 
-    wp config set FORCE_SSL_ADMIN 'false' --allow-root
+	# Create a "Welcome" page with a Login link
+	wp post create \
+	--post_title="Welcome" \
+	--post_content="<a href='/wp-login.php'>Login</a>" \
+	--post_status=publish \
+	--post_type=page \
+	--allow-root
+
+	# Set that page as the homepage
+	wp option update show_on_front page --allow-root
+	wp option update page_on_front $(wp post list --post_type=page --post_title="Welcome" --field=ID --allow-root) --allow-root
 
 
-    chmod 777 /var/www/html/wp-content
 
-    # install theme
+	wp config set FORCE_SSL_ADMIN 'false' --allow-root
 
-    wp theme install twentyfifteen --allow-root
 
-    wp theme activate twentyfifteen --allow-root
+	chmod 777 /var/www/html/wp-content
 
-    wp theme update twentyfifteen --allow-root
+	# install theme
+
+	wp theme install twentyfifteen --allow-root
+
+	wp theme activate twentyfifteen --allow-root
+
+	wp theme update twentyfifteen --allow-root
 fi
 
 
