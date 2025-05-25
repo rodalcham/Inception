@@ -8,7 +8,7 @@ server {
 	listen 443 ssl;
 	listen [::]:443 ssl;
 
-	server_name www.rchavez.42.fr rchavez.42.fr 34.32.89.201;
+	server_name www.rchavez.42.fr rchavez.42.fr 34.32.89.201 localhost 10.214.0.2;
 
 	ssl_certificate /etc/ssl/certs/nginx-selfsigned.crt;
 	ssl_certificate_key /etc/ssl/private/nginx-selfsigned.key;
