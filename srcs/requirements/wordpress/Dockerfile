@@ -4,7 +4,7 @@ RUN apt-get update && apt-get upgrade -y && apt-get install -y \
 	php-fpm \
 	php-mysql \
 	php-zip \
-	curl \
+	curl &&\
 	sed -i 's/listen =.*/listen = 9000/g' /etc/php/7.3/fpm/pool.d/www.conf
 	# php-redis \
 	# vim && \
