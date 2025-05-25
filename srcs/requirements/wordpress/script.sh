@@ -58,7 +58,7 @@ if ! wp core is-installed --allow-root; then
 fi
 # USERS SHOULD BE SECRET????
 
-cat << EOF > /etc/php/gt/fpm/pool.d/www.conf
+cat << EOF > /etc/php/7.3/fpm/pool.d/www.conf
 	[global]
 	pid = /run/php/php7.3-fpm.pid
 	error_log = /dev/stdout
