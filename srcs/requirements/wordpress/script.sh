@@ -55,7 +55,27 @@ if ! wp core is-installed --allow-root; then
 fi
 # USERS SHOULD BE SECRET????
 
-sed -i 's|listen = /run/php/php7.3-fpm.sock|listen = 9000|' /etc/php/7.3/fpm/pool.d/www.conf
+cat << EOF > /etc/php/7.3/fpm/pool.d/www.conf
+	[global]
+	pid = /run/php/php7.3-fpm.pid
+	error_log = /dev/stdout
+	log_level = notice
+	[www]
+	clear_env = no
+	user = www-data
+	group = www-data
+	listen = 0.0.0.0:9000
+	listen.owner = www-data
+	listen.group = www-data
+	pm = dynamic
+	pm.max_children = 5
+	pm.start_servers = 2
+	pm.min_spare_servers = 1
+	pm.max_spare_servers = 3
+EOF
+
+
+# sed -i 's|listen = /run/php/php7.3-fpm.sock|listen = 9000|' /etc/php/7.3/fpm/pool.d/www.conf
 
 echo "Wordpress is up and running"
 
