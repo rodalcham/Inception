@@ -28,7 +28,7 @@ server {
 }
 EOF
 
-cat << EOF ? /var/www/html/index.php
+cat << EOF > /var/www/html/index.php
 	<?php
 	// PHP code to include any necessary logic (optional)
 	?>
