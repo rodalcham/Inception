@@ -6,7 +6,7 @@
 #    By: rchavez <rchavez@student.42heilbronn.de    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/04/28 17:01:32 by rchavez@stu       #+#    #+#              #
-#    Updated: 2025/05/25 14:15:15 by rchavez          ###   ########.fr        #
+#    Updated: 2025/05/25 14:20:31 by rchavez          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,6 +15,10 @@ SRC = ./srcs/docker-compose.yml
 up:
 	mkdir -p /home/rchavez/data
 	chmod 755 /home/rchavez/data
+	mkdir -p /home/rchavez/data/mysql
+	chmod 755 /home/rchavez/data/mysql
+	mkdir -p /home/rchavez/data/wordpress
+	chmod 755 /home/rchavez/data/wordpress
 	sleep 1
 	docker-compose -f $(SRC) build --no-cache
 	docker-compose -f $(SRC) up -d
