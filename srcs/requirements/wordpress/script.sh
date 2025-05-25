@@ -56,11 +56,11 @@ if [ ! -f /var/www/html/wp-config.php ]; then
 
     # install theme
 
-    wp theme install twentyfifteen
+    wp theme install twentyfifteen --allow-root
 
-    wp theme activate twentyfifteen
+    wp theme activate twentyfifteen --allow-root
 
-    wp theme update twentyfifteen
+    wp theme update twentyfifteen --allow-root
 fi
 
 
