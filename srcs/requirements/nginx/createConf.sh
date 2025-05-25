@@ -24,6 +24,12 @@ server {
 		include fastcgi_params;
 		fastcgi_param SCRIPT_FILENAME \$document_root\$fastcgi_script_name;
 	}
+
+	location ~* \.(css|js|jpg|jpeg|png|gif|ico|svg|woff|woff2|ttf|eot)$ {
+    try_files \$uri =404;
+    expires max;
+    log_not_found off;
+	}
 }
 EOF
 

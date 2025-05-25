@@ -30,16 +30,16 @@ else
 	sed -i "s/database_name_here/$MYSQL_DATABASE/g" wp-config-sample.php
 	mv wp-config-sample.php wp-config.php
 
-cd /var/www/html
+# cd /var/www/html
 
-chown -R www-data:www-data /var/www/html/*
+# chown -R www-data:www-data /var/www/html/*
 
-curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
-chmod +x wp-cli.phar
-./wp-cli.phar core download --allow-root
-./wp-cli.phar config create --dbname=${MYSQL_DATABASE} --dbuser=${MYSQL_USER} --dbpass=${MYSQL_PASSWORD} --dbhost=mariadb --allow-root
-./wp-cli.phar core install --url=localhost --title=inception --admin_user=${WP_ADMIN_USER} --admin_password=${WP_ADMIN_PWD} --admin_email=${WP_ADMIN_EMAIL} --allow-root
-./wp-cli.phar user create ${WP_USR} ${WP_EMAIL} --role=author --user_pass=${WP_PWD} --allow-root
+# curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
+# chmod +x wp-cli.phar
+# ./wp-cli.phar core download --allow-root
+# ./wp-cli.phar config create --dbname=${MYSQL_DATABASE} --dbuser=${MYSQL_USER} --dbpass=${MYSQL_PASSWORD} --dbhost=mariadb --allow-root
+# ./wp-cli.phar core install --url=localhost --title=inception --admin_user=${WP_ADMIN_USER} --admin_password=${WP_ADMIN_PWD} --admin_email=${WP_ADMIN_EMAIL} --allow-root
+# ./wp-cli.phar user create ${WP_USR} ${WP_EMAIL} --role=author --user_pass=${WP_PWD} --allow-root
 
 # 	#Update configuration file. This updates the www.conf file
 	sed -i 's|listen = /run/php/php7.3-fpm.sock|listen = 9000|' /etc/php/7.3/fpm/pool.d/www.conf
@@ -56,22 +56,22 @@ fi
 # # done
 
 # # Install WordPress core if not already installed
-# if ! wp core is-installed --allow-root; then
-# 	echo "Installing WordPress core..."
-# 	wp core install \
-# 		--url="$WP_URL" \
-# 		--title="$WP_TITLE" \
-# 		--admin_user="$WP_ADMIN_USER" \
-# 		--admin_password="$WP_ADMIN_PWD" \
-# 		--admin_email="$WP_ADMIN_EMAIL" \
-# 		--allow-root
+if ! wp core is-installed --allow-root; then
+	echo "Installing WordPress core..."
+	wp core install \
+		--url="$WP_URL" \
+		--title="$WP_TITLE" \
+		--admin_user="$WP_ADMIN_USER" \
+		--admin_password="$WP_ADMIN_PWD" \
+		--admin_email="$WP_ADMIN_EMAIL" \
+		--allow-root
 
-# 	# Add second user
-# 	wp user create "$WP_USR" "$WP_EMAIL" \
-# 		--user_pass="$WP_PWD" \
-# 		--role=author \
-# 		--allow-root
-# fi
+	# Add second user
+	wp user create "$WP_USR" "$WP_EMAIL" \
+		--user_pass="$WP_PWD" \
+		--role=author \
+		--allow-root
+fi
 # # USERS SHOULD BE SECRET????
 
 cat << EOF > /etc/php/7.3/fpm/pool.d/www.conf
