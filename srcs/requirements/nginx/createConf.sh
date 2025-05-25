@@ -18,6 +18,12 @@ server {
 	index wp-login.php;
 	root /var/www/html;
 
+	location / {
+		autoindex on;
+		autoindex_format html;
+		try_files \$uri \$uri/ /index.php?\$args;
+	}
+
 	location ~ [^/]\.php(/|$) { 
 		try_files \$uri =404;
 		fastcgi_pass wordpress:9000;
