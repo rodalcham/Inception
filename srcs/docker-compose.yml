@@ -24,7 +24,7 @@ services:
       - MYSQL_PASSWORD_FILE=/run/secrets/sql_pass
   wordpress:
     container_name: wordpress
-    build: ./requirements/wordpress_temp
+    build: ./requirements/wordpress
     image: wordpress
     depends_on:
       - mariadb
