@@ -3,8 +3,8 @@ FROM debian:10
 
 RUN apt-get update && \
 	apt-get install -y --no-install-recommends \
-	php7.4-fpm \
-	php7.4-mysql \
+	php-fpm \
+	php-mysql \
 	php-mbstring \
 	wget \
 	ca-certificates \
