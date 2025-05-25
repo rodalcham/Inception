@@ -45,11 +45,11 @@ server {
 		fastcgi_param SCRIPT_FILENAME \$document_root\$fastcgi_script_name;
 	}
 
-	location ~* \.(css|js|jpg|jpeg|png|gif|ico|svg|woff|woff2|ttf|eot|html|txt)$ {
-	try_files \$uri =404;
-	expires max;
-	log_not_found off;
-	}
+	location / {
+        autoindex on;
+        autoindex_format html;
+        try_files $uri $uri/ /index.php?$args;
+    }
 }
 EOF
 
