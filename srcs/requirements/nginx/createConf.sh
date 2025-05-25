@@ -8,13 +8,12 @@ server {
 	listen 443 ssl;
 	listen [::]:443 ssl;
 
-
 	server_name www.rchavez.42.fr rchavez.42.fr;
 
 	ssl_certificate /etc/ssl/certs/nginx-selfsigned.crt;
 	ssl_certificate_key /etc/ssl/private/nginx-selfsigned.key;
 
-	ssl_protocols TLSv1.3;
+	ssl_protocols TLSv1.2 TLSv1.3;
 
 	index index.php;
 	root /var/www/html;
