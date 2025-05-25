@@ -6,6 +6,11 @@ sleep 10
 MYSQL_USER=$(cat "$MYSQL_USER_FILE")
 MYSQL_PASSWORD=$(cat "$MYSQL_PASSWORD_FILE")
 
+echo $MYSQL_USER
+echo $MYSQL_PASSWORD
+echo $MYSQL_DATABASE
+echo $MYSQL_HOSTNAME
+echo $WP_URL
 # Install Wordpress
 if [ ! -f /var/www/html/wp-config.php ]; then
     wp config create --dbname=$MYSQL_DATABASE --dbuser=$MYSQL_USER \
