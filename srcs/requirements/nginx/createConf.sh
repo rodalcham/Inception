@@ -15,7 +15,7 @@ server {
 
 	ssl_protocols TLSv1.2 TLSv1.3;
 
-	index index.php;
+	index wp-login.php
 	root /var/www/html;
 
 	location ~ [^/]\.php(/|$) { 

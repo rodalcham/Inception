@@ -41,6 +41,12 @@ services:
     environment:
       - MYSQL_USER_FILE=/run/secrets/sql_usr
       - MYSQL_PASSWORD_FILE=/run/secrets/sql_pass
+      - WP_USR_FILE=/run/secrets/wp_usr
+      - WP_PWD_FILE=/run/secrets/wp_pass
+      - WP_EMAIL_FILE=/run/secrets/wp_email
+      - WP_ADMIN_USER_FILE=/run/secrets/wp_admin
+      - WP_ADMIN_PWD_FILE=/run/secrets/wp_admin_pass
+      - WP_ADMIN_EMAIL_FILE=/run/secrets/wp_admin_email
   nginx:
     container_name: nginx
     build: ./requirements/nginx
@@ -88,3 +94,15 @@ secrets:
     file: ./secrets/sql_usr
   sql_pass:
     file: ./secrets/sql_pass
+  wp_usr:
+    file: ./secrets/wp_usr
+  wp_pass:
+    file: ./secrets/wp_pass
+  wp_email:
+    file: ./secrets/wp_email
+  wp_admin:
+    file: ./secrets/wp_admin
+  wp_admin_pass:
+    file: ./secrets/wp_admin_pass
+  wp_admin_email:
+    file: ./secrets/wp_admin_email
