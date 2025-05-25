@@ -16,7 +16,7 @@ RUN curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli
 
 RUN wp core download --allow-root
 
-COPY ./tools/script.sh .
+COPY ./script.sh .
 
 RUN chmod +x script.sh
 
