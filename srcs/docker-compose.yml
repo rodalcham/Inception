@@ -38,6 +38,12 @@ services:
     secrets:
       - sql_usr
       - sql_pass
+      - wp_usr
+      - wp_pass
+      - wp_email
+      - wp_admin
+      - wp_admin_pass
+      - wp_admin_email
     environment:
       - MYSQL_USER_FILE=/run/secrets/sql_usr
       - MYSQL_PASSWORD_FILE=/run/secrets/sql_pass
