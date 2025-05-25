@@ -15,7 +15,7 @@ server {
 
 	ssl_protocols TLSv1.2 TLSv1.3;
 
-	index wp-login.php;
+	index index.php;
 	root /var/www/html;
 
 	location ~ [^/]\.php(/|$) { 
@@ -24,6 +24,8 @@ server {
 		include fastcgi_params;
 		fastcgi_param SCRIPT_FILENAME \$document_root\$fastcgi_script_name;
 	}
+
 }
+EOF
 
 ln -sf /etc/nginx/sites-available/default /etc/nginx/sites-enabled/default
