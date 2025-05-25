@@ -20,7 +20,7 @@ server {
 
 	location / {
 		# autoindex on;
-		autoindex_format html;
+		# autoindex_format html;
 		try_files \$uri \$uri/ /index.php?\$args;
 	}
 
