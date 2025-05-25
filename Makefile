@@ -3,20 +3,18 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: rchavez@student.42heilbronn.de <rchavez    +#+  +:+       +#+         #
+#    By: rchavez <rchavez@student.42heilbronn.de    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/04/28 17:01:32 by rchavez@stu       #+#    #+#              #
-#    Updated: 2025/05/17 17:54:24 by rchavez@stu      ###   ########.fr        #
+#    Updated: 2025/05/25 14:15:15 by rchavez          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 SRC = ./srcs/docker-compose.yml
 
 up:
-	mkdir -p ./srcs/Data/mysql
-	chmod 755 ./srcs/Data/mysql
-	mkdir -p ./srcs/Data/wordpress
-	chmod 755 ./srcs/Data/wordpress
+	mkdir -p /home/rchavez/data
+	chmod 755 /home/rchavez/data
 	sleep 1
 	docker-compose -f $(SRC) build --no-cache
 	docker-compose -f $(SRC) up -d
@@ -28,9 +26,7 @@ cache:
 
 clean:
 	docker-compose -f $(SRC) down --volumes --remove-orphans
-	docker volume rm srcs_mdb || true
-	docker network rm inception || true
-	rm -rf ./srcs/Data
+	rm -rf /home/rchavez/data/*
 
 down:
 	docker-compose -f $(SRC) down
