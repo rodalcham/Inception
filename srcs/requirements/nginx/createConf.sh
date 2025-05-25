@@ -10,7 +10,6 @@ server {
 
 	server_name www.rchavez.42.fr rchavez.42.fr;
 
-	ssl on;
 	ssl_certificate /etc/ssl/certs/nginx-selfsigned.crt;
 	ssl_certificate_key /etc/ssl/private/nginx-selfsigned.key;
 
@@ -18,6 +17,26 @@ server {
 
 	index index.php;
 	root /var/www/html;
+
+	gzip on;
+	gzip_comp_level 6;
+	gzip_min_length 256;
+	gzip_vary on;
+	gzip_proxied any;
+	gzip_types
+		text/plain
+		text/css
+		text/javascript
+		text/html
+		application/javascript
+		application/json
+		application/xml
+		application/rss+xml
+		font/ttf
+		font/otf
+		font/woff
+		font/woff2;
+
 
 	location ~ [^/]\.php(/|$) { 
 		try_files \$uri =404;
@@ -27,9 +46,9 @@ server {
 	}
 
 	location ~* \.(css|js|jpg|jpeg|png|gif|ico|svg|woff|woff2|ttf|eot|html|txt)$ {
-    try_files \$uri =404;
-    expires max;
-    log_not_found off;
+	try_files \$uri =404;
+	expires max;
+	log_not_found off;
 	}
 }
 EOF
