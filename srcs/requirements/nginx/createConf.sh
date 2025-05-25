@@ -24,12 +24,15 @@ server {
 		include fastcgi_params;
 		fastcgi_param SCRIPT_FILENAME \$document_root\$fastcgi_script_name;
 	}
+}
 
-	location / {
-        autoindex on;
-        autoindex_format html;
-        try_files $uri $uri/ /index.php?$args;
-    }
+server {
+    listen 80;
+    listen [::]:80;
+
+    server_name www.rchavez.42.fr rchavez.42.fr;
+
+    return 301 https://$host$request_uri;
 }
 EOF
 
