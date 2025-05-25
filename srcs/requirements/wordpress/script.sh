@@ -17,8 +17,8 @@ else
 	#Inport env variables in the config file. This creates the wp-config.php file
 	cd /var/www/html/wordpress
 	# Set the WordPress URL and Home to your domain name
-	sed -i "s|define('WP_HOME', 'http://localhost');|define('WP_HOME', 'https://rchavez.42.fr');|g" wp-config.php
-	sed -i "s|define('WP_SITEURL', 'http://localhost');|define('WP_SITEURL', 'https://rchavez.42.fr');|g" wp-config.php
+	sed -i "s|define('WP_HOME', 'http://localhost');|define('WP_HOME', 'https://rchavez.42.fr');|g" wp-config-sample.php
+	sed -i "s|define('WP_SITEURL', 'http://localhost');|define('WP_SITEURL', 'https://rchavez.42.fr');|g" wp-config-sample.php
 	sed -i "s/username_here/$MYSQL_USER/g" wp-config-sample.php
 	sed -i "s/password_here/$MYSQL_PASSWORD/g" wp-config-sample.php
 	sed -i "s/localhost/$MYSQL_HOSTNAME/g" wp-config-sample.php
