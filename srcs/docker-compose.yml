@@ -71,8 +71,6 @@ volumes:
       type: none
       o: bind
       device: /home/rchavez/data/mysql
-      # device: /Users/rchavez/Desktop/Inception/srcs/Data/mysql
-      # device: /Users/rodrigo/Desktop/Inception/srcs/Data/mysql
   wp:
     name: wp
     driver: local
@@ -80,8 +78,6 @@ volumes:
       type: none
       o: bind
       device: /home/rchavez/data/wordpress
-      # device: /Users/rchavez/Desktop/Inception/srcs/Data/wordpress
-      # device: /Users/rodrigo/Desktop/Inception/srcs/Data/wordpress
 
 networks:
   inception:
