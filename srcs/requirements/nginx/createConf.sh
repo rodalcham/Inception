@@ -10,6 +10,7 @@ server {
 
 	server_name www.rchavez.42.fr rchavez.42.fr;
 
+	ssl on;
 	ssl_certificate /etc/ssl/certs/nginx-selfsigned.crt;
 	ssl_certificate_key /etc/ssl/private/nginx-selfsigned.key;
 
@@ -25,7 +26,7 @@ server {
 		fastcgi_param SCRIPT_FILENAME \$document_root\$fastcgi_script_name;
 	}
 
-	location ~* \.(css|js|jpg|jpeg|png|gif|ico|svg|woff|woff2|ttf|eot)$ {
+	location ~* \.(css|js|jpg|jpeg|png|gif|ico|svg|woff|woff2|ttf|eot|html|txt)$ {
     try_files \$uri =404;
     expires max;
     log_not_found off;
