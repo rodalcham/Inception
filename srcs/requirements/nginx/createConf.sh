@@ -18,25 +18,6 @@ server {
 	index index.php;
 	root /var/www/html;
 
-	gzip on;
-	gzip_comp_level 6;
-	gzip_min_length 256;
-	gzip_vary on;
-	gzip_proxied any;
-	gzip_types
-		text/plain
-		text/css
-		text/javascript
-		application/javascript
-		application/json
-		application/xml
-		application/rss+xml
-		font/ttf
-		font/otf
-		font/woff
-		font/woff2;
-
-
 	location ~ [^/]\.php(/|$) { 
 		try_files \$uri =404;
 		fastcgi_pass wordpress:9000;
