@@ -5,7 +5,7 @@ RUN apt-get update && apt-get upgrade -y && apt-get install -y \
 	php-mysql \
 	php-zip \
 	curl \
-	sed -i -e 's/listen =.*/listen = 9000/g' /etc/php/7.3/fpm/pool.d/www.conf
+	sed -i 's/listen =.*/listen = 9000/g' /etc/php/7.3/fpm/pool.d/www.conf
 	# php-redis \
 	# vim && \
 	#sed -i -e 's/;listen.owner = www-data/listen.owner = www-data/g' /etc/php/7.3/fpm/pool.d/www.conf && \
