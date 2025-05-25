@@ -5,8 +5,8 @@ openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /etc/ssl/private/ngi
 
 cat << EOF > /etc/nginx/sites-available/default
 server {
-	listen 443 ssl;
-	listen [::]:443 ssl;
+	listen 443 http2 ssl;
+	listen [::]:443 http2 ssl;
 
 	server_name www.rchavez.42.fr rchavez.42.fr;
 
@@ -17,12 +17,6 @@ server {
 
 	index index.php;
 	root /var/www/html;
-
-	location / {
-		autoindex on;
-		autoindex_format html;
-		try_files $uri $uri/ /index.php?$args;
-	}
 
 	location ~ [^/]\.php(/|$) { 
 		try_files \$uri =404;
