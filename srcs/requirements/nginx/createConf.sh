@@ -5,8 +5,8 @@ openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /etc/ssl/private/ngi
 
 cat << EOF > /etc/nginx/sites-available/default
 server {
-	listen 443 http2 ssl;
-	listen [::]:443 http2 ssl;
+	listen 443 ssl http2;
+	listen [::]:443 ssl http2;
 
 	server_name www.rchavez.42.fr rchavez.42.fr;
 
