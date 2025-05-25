@@ -15,6 +15,7 @@ else
 
 
 	#Inport env variables in the config file. This creates the wp-config.php file
+
 	cd /var/www/html/wordpress
 	chown -R www-data:www-data /var/www/html/wordpress
 	find /var/www/html/wordpress -type d -exec chmod 755 {} \;
@@ -29,38 +30,48 @@ else
 	sed -i "s/database_name_here/$MYSQL_DATABASE/g" wp-config-sample.php
 	mv wp-config-sample.php wp-config.php
 
-	#Update configuration file. This updates the www.conf file
-	sed -i 's|listen = /run/php/php7.3-fpm.sock|listen = 9000|' /etc/php/7.3/fpm/pool.d/www.conf
-fi
+cd /var/www/html
 
-# Wait for MariaDB
-# echo "Waiting for MariaDB..."
-# until mysql -h"$MYSQL_HOSTNAME" -u"$MYSQL_USER" -p"$MYSQL_PASSWORD" -e "SHOW DATABASES;" > /dev/null 2>&# 1; do
-# 	echo "Trying to connect"
-# 	echo mysql -h"$MYSQL_HOSTNAME" -u"$MYSQL_USER" -p"$MYSQL_PASSWORD" -e "SHOW DATABASES;" > /dev/null
-# 	mysql -h"$MYSQL_HOSTNAME" -u"$MYSQL_USER" -p"$MYSQL_PASSWORD" -e "SHOW DATABASES;" > /dev/null
-# 	echo .
-# 	sleep 1
-# done
+chown -R www-data:www-data /var/www/html/*
 
-# Install WordPress core if not already installed
-if ! wp core is-installed --allow-root; then
-	echo "Installing WordPress core..."
-	wp core install \
-		--url="$WP_URL" \
-		--title="$WP_TITLE" \
-		--admin_user="$WP_ADMIN_USER" \
-		--admin_password="$WP_ADMIN_PWD" \
-		--admin_email="$WP_ADMIN_EMAIL" \
-		--allow-root
+curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
+chmod +x wp-cli.phar
+./wp-cli.phar core download --allow-root
+./wp-cli.phar config create --dbname=${MYSQL_DATABASE} --dbuser=${MYSQL_USER} --dbpass=${MYSQL_PASSWORD} --dbhost=mariadb --allow-root
+./wp-cli.phar core install --url=localhost --title=inception --admin_user=${WP_ADMIN_USER} --admin_password=${WP_ADMIN_PWD} --admin_email=${WP_ADMIN_EMAIL} --allow-root
+./wp-cli.phar user create ${WP_USR} ${WP_EMAIL} --role=author --user_pass=${WP_PWD} --allow-root
+# 	#Update configuration file. This updates the www.conf file
+# 	sed -i 's|listen = /run/php/php7.3-fpm.sock|listen = 9000|' /etc/php/7.3/fpm/pool.d/www.conf
+# fi
 
-	# Add second user
-	wp user create "$WP_USR" "$WP_EMAIL" \
-		--user_pass="$WP_PWD" \
-		--role=author \
-		--allow-root
-fi
-# USERS SHOULD BE SECRET????
+# # Wait for MariaDB
+# # echo "Waiting for MariaDB..."
+# # until mysql -h"$MYSQL_HOSTNAME" -u"$MYSQL_USER" -p"$MYSQL_PASSWORD" -e "SHOW DATABASES;" > /dev/null 2>&# 1; do
+# # 	echo "Trying to connect"
+# # 	echo mysql -h"$MYSQL_HOSTNAME" -u"$MYSQL_USER" -p"$MYSQL_PASSWORD" -e "SHOW DATABASES;" > /dev/null
+# # 	mysql -h"$MYSQL_HOSTNAME" -u"$MYSQL_USER" -p"$MYSQL_PASSWORD" -e "SHOW DATABASES;" > /dev/null
+# # 	echo .
+# # 	sleep 1
+# # done
+
+# # Install WordPress core if not already installed
+# if ! wp core is-installed --allow-root; then
+# 	echo "Installing WordPress core..."
+# 	wp core install \
+# 		--url="$WP_URL" \
+# 		--title="$WP_TITLE" \
+# 		--admin_user="$WP_ADMIN_USER" \
+# 		--admin_password="$WP_ADMIN_PWD" \
+# 		--admin_email="$WP_ADMIN_EMAIL" \
+# 		--allow-root
+
+# 	# Add second user
+# 	wp user create "$WP_USR" "$WP_EMAIL" \
+# 		--user_pass="$WP_PWD" \
+# 		--role=author \
+# 		--allow-root
+# fi
+# # USERS SHOULD BE SECRET????
 
 cat << EOF > /etc/php/7.3/fpm/pool.d/www.conf
 	[global]
@@ -82,9 +93,9 @@ cat << EOF > /etc/php/7.3/fpm/pool.d/www.conf
 EOF
 
 
-# sed -i 's|listen = /run/php/php7.3-fpm.sock|listen = 9000|' /etc/php/7.3/fpm/pool.d/www.conf
+# # sed -i 's|listen = /run/php/php7.3-fpm.sock|listen = 9000|' /etc/php/7.3/fpm/pool.d/www.conf
 
-echo "Wordpress is up and running"
+# echo "Wordpress is up and running"
 
 mkdir -p /run/php
 exec /usr/sbin/php-fpm7.3 -F
