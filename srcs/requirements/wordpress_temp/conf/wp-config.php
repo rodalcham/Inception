@@ -1,6 +1,6 @@
 <?php
 define('DB_NAME', 'wordpress');
-define('DB_USER', 'wp_user');
+define('DB_USER', 'your_user');
 define('DB_PASSWORD', getenv('DB_PASSWORD'));  // Retrieve password from environment
 define('DB_HOST', 'mariadb');
 define('DB_CHARSET', 'utf8');
