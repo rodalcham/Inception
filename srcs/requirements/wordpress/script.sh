@@ -26,7 +26,7 @@ if [ ! -f /var/www/html/wp-config.php ]; then
 		--url="$WP_URL" \
 		--title="$WP_TITLE" \
 		--admin_user="$WP_ADMIN_USER" \
-		--admin_pass/word="$WP_ADMIN_PWD" \
+		--admin_password="$WP_ADMIN_PWD" \
 		--admin_email="$WP_ADMIN_EMAIL" \
 		--allow-root
 
