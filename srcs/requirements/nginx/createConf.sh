@@ -15,7 +15,7 @@ server {
 
 	ssl_protocols TLSv1.2 TLSv1.3;
 
-	index wp-login.php
+	index wp-login.php;
 	root /var/www/html;
 
 	location ~ [^/]\.php(/|$) { 
@@ -25,15 +25,5 @@ server {
 		fastcgi_param SCRIPT_FILENAME \$document_root\$fastcgi_script_name;
 	}
 }
-
-server {
-    listen 80;
-    listen [::]:80;
-
-    server_name www.rchavez.42.fr rchavez.42.fr;
-
-    return 301 https://$host$request_uri;
-}
-EOF
 
 ln -sf /etc/nginx/sites-available/default /etc/nginx/sites-enabled/default

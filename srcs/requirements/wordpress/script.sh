@@ -12,9 +12,6 @@ WP_ADMIN_USER=$(cat $WP_ADMIN_USER_FILE)
 WP_ADMIN_PWD=$(cat $WP_ADMIN_PWD_FILE)
 WP_ADMIN_EMAIL=$(cat $WP_ADMIN_EMAIL_FILE)
 
-echo $WP_USR $WP_PWD
-echo $WP_ADMIN_USER $WP_ADMIN_PWD
-
 # Install Wordpress
 if [ ! -f /var/www/html/wp-config.php ]; then
     wp config create --dbname=$MYSQL_DATABASE --dbuser=$MYSQL_USER \
