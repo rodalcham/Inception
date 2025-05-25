@@ -4,7 +4,7 @@ RUN apt-get update && apt-get upgrade && apt-get install -y \
 	php-fpm \
 	php-mysql \
 	php-zip \
-	curl \
+	curl
 RUN apt-get install -y sendmail
 RUN mkdir -p /run/php
 
