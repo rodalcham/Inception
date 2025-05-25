@@ -1,6 +1,6 @@
 FROM debian:buster
 
-RUN apt-get update && apt-get upgrade && apt-get install -y \
+RUN apt-get update && apt-get upgrade -y && apt-get install -y \
 	php-fpm \
 	php-mysql \
 	php-zip \
