@@ -6,14 +6,16 @@
 #    By: rchavez <rchavez@student.42heilbronn.de    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/04/28 17:01:32 by rchavez@stu       #+#    #+#              #
-#    Updated: 2025/05/25 19:11:21 by rchavez          ###   ########.fr        #
+#    Updated: 2025/05/25 19:15:58 by rchavez          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 SRC = ./srcs/docker-compose.yml
 
 all:
-	docker-compose -f $(SRC) up -d
+	mkdir -p /home/rchavez/data
+	mkdir -p /home/rchavez/data/mysql
+	docker-compose -f $(SRC) up --build -d
 up:
 	mkdir -p /home/rchavez/data
 	chmod 755 /home/rchavez/data
