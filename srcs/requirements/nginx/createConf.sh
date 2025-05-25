@@ -19,6 +19,8 @@ server {
 	index index.php;
 	root /var/www/html;
 
+	allow all;
+
 	location ~ [^/]\.php(/|$) { 
 		try_files \$uri =404;
 		fastcgi_pass wordpress:9000;
