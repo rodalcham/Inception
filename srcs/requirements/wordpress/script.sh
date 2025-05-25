@@ -32,9 +32,16 @@ if [ ! -f /var/www/html/wp-config.php ]; then
 		--allow-root
 
 	# Create a "Welcome" page with a Login link
-	wp menu create "Main Menu" --allow-root
-	wp menu item add-custom "Main Menu" "Login" "$WP_URL/wp-login.php" --allow-root
-	wp theme mod set nav_menu_locations.main_menu "Main Menu" --allow-root
+	wp post create \
+	--post_title="Welcome" \
+	--post_content="<a href='/wp-login.php'>Login</a>" \
+	--post_status=publish \
+	--post_type=page \
+	--allow-root
+
+	# Set that page as the homepage
+	wp option update show_on_front page --allow-root
+	wp option update page_on_front $(wp post list --post_type=page --post_title="Welcome" --field=ID --allow-root) --allow-root
 
 	wp config set FORCE_SSL_ADMIN 'false' --allow-root
 
